@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Takeoff Studio – We Build Websites That Bring Customers</title>
+  <meta name="description" content="The Takeoff Studio is a premium web development agency crafting high-performance websites that convert visitors into customers. Let's build something extraordinary." />
+  <meta name="keywords" content="web development agency, website design, UI/UX, SEO, digital marketing, landing pages" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Takeoff Studio – We Build Websites That Bring Customers" />
+  <meta property="og:description" content="Premium web development that converts. Let's takeoff." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --bg:        #08080e;
+      --bg2:       #0d0d18;
+      --bg3:       #111122;
+      --gold:      #f5a623;
+      --gold-dim:  #c47d0e;
+      --gold-glow: rgba(245,166,35,0.18);
+      --gold-glow2:rgba(245,166,35,0.08);
+      --white:     #ffffff;
+      --off-white: #e8e8f0;
+      --muted:     #7a7a9a;
+      --border:    rgba(255,255,255,0.07);
+      --border-gold: rgba(245,166,35,0.3);
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --radius:    16px;
+      --radius-sm: 10px;
+      --max-w:     1200px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--off-white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    button { cursor: none; border: none; background: none; font-family: inherit; }
+
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    #cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%,-50%);
+      transition: width 0.2s, height 0.2s, opacity 0.2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(245,166,35,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease;
+    }
+    body.cursor-hover #cursor-dot { width: 12px; height: 12px; }
+    body.cursor-hover #cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+    /* ============================================================
+       SCROLL PROGRESS BAR
+    ============================================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      z-index: 9998;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 120px 0; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid var(--border-gold);
+      background: var(--gold-glow2);
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--gold);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .section-title span { color: var(--gold); }
+    .section-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold);
+      color: #08080e;
+      font-family: var(--font-display);
+      font-size: 15px; font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 100px;
+      transition: var(--transition);
+      white-space: nowrap;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary:hover { box-shadow: 0 0 30px rgba(245,166,35,0.5); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-size: 15px; font-weight: 600;
+      padding: 16px 32px;
+      border-radius: 100px;
+      transition: var(--transition);
+      background: var(--gold-glow2);
+    }
+    .btn-outline:hover { background: var(--gold-glow); border-color: var(--gold); transform: translateY(-2px); }
+
+    /* Fade-in on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 0;
+      transition: var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(8,8,14,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+    }
+    .nav-links a {
+      font-size: 14px; font-weight: 500;
+      color: var(--muted);
+      transition: var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { display: flex; align-items: center; gap: 16px; }
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      width: 28px; cursor: none;
+    }
+    .hamburger span {
+      display: block; height: 2px; background: var(--off-white);
+      border-radius: 2px; transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 36px;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    #mobile-menu.open { transform: translateX(0); }
+    #mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 32px; font-weight: 700;
+      color: var(--white);
+      transition: color 0.2s;
+    }
+    #mobile-menu a:hover { color: var(--gold); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 0 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(245,166,35,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 80% 60%, rgba(245,166,35,0.06) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 0%, transparent 100%);
+    }
+    .hero-content { position: relative; z-index: 1; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,0.08);
+      border: 1px solid rgba(245,166,35,0.25);
+      color: var(--gold);
+      font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 100px;
+      margin-bottom: 32px;
+      animation: fadeSlideDown 0.8s ease both;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: var(--gold);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.6); }
+      50% { box-shadow: 0 0 0 6px rgba(245,166,35,0); }
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      color: var(--white);
+      margin-bottom: 28px;
+      animation: fadeSlideDown 0.9s ease 0.1s both;
+    }
+    .hero-headline .gold-text { color: var(--gold); position: relative; display: inline-block; }
+    .hero-headline .gold-text::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 2px;
+    }
+    .hero-sub {
+      font-size: 20px; color: var(--muted); max-width: 580px;
+      margin: 0 auto 44px; line-height: 1.7;
+      animation: fadeSlideDown 0.9s ease 0.2s both;
+    }
+    .hero-actions {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeSlideDown 0.9s ease 0.3s both;
+    }
+    .hero-stats {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; margin-top: 80px;
+      animation: fadeSlideDown 0.9s ease 0.5s both;
+    }
+    .stat-item {
+      flex: 1; max-width: 200px;
+      text-align: center;
+      padding: 32px 24px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+    }
+    .stat-item:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .stat-item:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .stat-item + .stat-item { border-left: none; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 42px; font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .hero-scroll {
+      margin-top: 60px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: var(--muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      animation: fadeSlideDown 0.9s ease 0.7s both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%; pointer-events: none; z-index: 0;
+      filter: blur(80px);
+    }
+    .orb-1 { width: 500px; height: 500px; background: rgba(245,166,35,0.06); top: -100px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(245,166,35,0.04); bottom: 0; right: -100px; }
+
+    /* ============================================================
+       SERVICES
+    ============================================================ */
+    #services { background: var(--bg); }
+    .services-header { text-align: center; margin-bottom: 64px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--bg);
+      padding: 44px 36px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--gold-glow2), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0); transition: transform 0.4s;
+    }
+    .service-card:hover { background: var(--bg2); }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      transition: var(--transition);
+      font-size: 22px;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(245,166,35,0.2);
+      box-shadow: 0 0 20px rgba(245,166,35,0.3);
+    }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 700;
+      color: var(--white); margin-bottom: 12px;
+    }
+    .service-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .service-arrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--gold); font-size: 14px; font-weight: 600;
+      margin-top: 20px;
+      opacity: 0; transform: translateX(-8px);
+      transition: var(--transition);
+    }
+    .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ============================================================
+       PROCESS
+    ============================================================ */
+    #process { background: var(--bg2); }
+    .process-header { text-align: center; margin-bottom: 80px; }
+    .process-track {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; position: relative;
+    }
+    .process-track::before {
+      content: '';
+      position: absolute; top: 40px; left: 10%; right: 10%;
+      height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold), var(--gold), var(--border-gold), transparent);
+      z-index: 0;
+    }
+    .process-step {
+      padding: 0 24px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .step-number {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 26px; font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 28px;
+      position: relative;
+      transition: var(--transition);
+      box-shadow: 0 0 0 0 rgba(245,166,35,0);
+    }
+    .process-step:hover .step-number {
+      background: var(--gold-glow);
+      box-shadow: 0 0 30px rgba(245,166,35,0.3);
+    }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 700;
+      color: var(--white); margin-bottom: 12px;
+    }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ============================================================
+       PORTFOLIO
+    ============================================================ */
+    #portfolio { background: var(--bg); }
+    .portfolio-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 56px; flex-wrap: wrap; gap: 24px;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .portfolio-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--bg2);
+      transition: var(--transition);
+      group: true;
+    }
+    .portfolio-card:hover { border-color: var(--border-gold); }
+    .portfolio-thumb {
+      width: 100%; height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      font-size: 48px;
+    }
+    .portfolio-info { padding: 24px; }
+    .portfolio-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .portfolio-title {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 700; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .portfolio-desc { font-size: 14px; color: var(--muted); }
+
+    /* ============================================================
+       WHY US
+    ============================================================ */
+    #why-us {
+      background: var(--bg2);
+      position: relative; overflow: hidden;
+    }
+    #why-us::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .why-us-header { text-align: center; margin-bottom: 64px; }
+    .why-us-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .why-card {
+      padding: 40px 36px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      display: flex; gap: 24px;
+    }
+    .why-card:hover { border-color: var(--border-gold); background: rgba(245,166,35,0.04); transform: translateY(-4px); }
+    .why-icon {
+      flex-shrink: 0;
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .why-body {}
+    .why-title {
+      font-family: var(--font-display);
+      font-size: 19px; font-weight: 700; color: var(--white);
+      margin-bottom: 10px;
+    }
+    .why-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    #testimonials { background: var(--bg); }
+    .testimonials-header { text-align: center; margin-bottom: 64px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testimonial-card {
+      padding: 36px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      transition: var(--transition);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: 20px; right: 30px;
+      font-family: var(--font-display);
+      font-size: 80px; color: rgba(245,166,35,0.1);
+      line-height: 1;
+    }
+    .testimonial-card:hover { border-color: var(--border-gold); transform: translateY(-4px); }
+    .stars { display: flex; gap: 4px; margin-bottom: 20px; }
+    .star { color: var(--gold); font-size: 14px; }
+    .testimonial-text {
+      font-size: 16px; color: var(--off-white); line-height: 1.8;
+      margin-bottom: 28px; font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--gold-glow); border: 2px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 16px; font-weight: 700;
+      color: var(--gold);
+    }
+    .author-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--white); }
+    .author-role { font-size: 13px; color: var(--muted); }
+
+    /* ============================================================
+       CTA
+    ============================================================ */
+    #cta {
+      background: var(--bg2);
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(245,166,35,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 100px 24px;
+      border-radius: 24px;
+      border: 1px solid var(--border-gold);
+      background: rgba(245,166,35,0.03);
+      backdrop-filter: blur(10px);
+    }
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800; line-height: 1.1;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .cta-sub { font-size: 18px; color: var(--muted); max-width: 500px; margin: 0 auto 44px; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    #contact { background: var(--bg); }
+    .contact-header { text-align: center; margin-bottom: 64px; }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 60px; align-items: start;
+    }
+    .contact-info {}
+    .contact-info-title {
+      font-family: var(--font-display);
+      font-size: 28px; font-weight: 700; color: var(--white);
+      margin-bottom: 16px;
+    }
+    .contact-info-text { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 12px;
+      transition: var(--transition);
+    }
+    .contact-detail:hover { border-color: var(--border-gold); }
+    .contact-detail-icon { font-size: 20px; }
+    .contact-detail-text { font-size: 14px; color: var(--muted); }
+    .contact-detail-text strong { display: block; color: var(--white); font-size: 15px; margin-bottom: 2px; }
+
+    /* Form */
+    .contact-form {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 44px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+    .form-group label {
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      margin-bottom: 8px; letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      outline: none;
+      transition: var(--transition);
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(245,166,35,0.04);
+      box-shadow: 0 0 0 3px rgba(245,166,35,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(122,122,154,0.6); }
+    .form-group.error input,
+    .form-group.error textarea { border-color: #ff4444; }
+    .form-error-msg { font-size: 12px; color: #ff4444; margin-top: 6px; display: none; }
+    .form-group.error .form-error-msg { display: block; }
+    .form-submit-btn {
+      width: 100%; padding: 18px;
+      background: var(--gold);
+      color: #08080e;
+      font-family: var(--font-display);
+      font-size: 16px; font-weight: 700;
+      border-radius: 100px;
+      border: none;
+      cursor: none;
+      transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      position: relative; overflow: hidden;
+    }
+    .form-submit-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%); transition: transform 0.4s;
+    }
+    .form-submit-btn:hover::before { transform: translateX(0); }
+    .form-submit-btn:hover { box-shadow: 0 0 40px rgba(245,166,35,0.5); transform: translateY(-2px); }
+    .form-submit-btn:disabled { opacity: 0.6; transform: none; box-shadow: none; cursor: not-allowed; }
+    .form-success {
+      display: none; text-align: center; padding: 40px;
+    }
+    .form-success.show { display: block; }
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 10px;
+    }
+    .success-text { color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .form-notice {
+      font-size: 12px; color: var(--muted); text-align: center;
+      margin-top: 16px; line-height: 1.6;
+    }
+    .form-notice a { color: var(--gold); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 40px;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 14px;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 240px; }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border); padding-top: 28px; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-copy span { color: var(--gold); }
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--muted);
+      transition: var(--transition);
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow2); }
+
+    /* ============================================================
+       EMAILJS CONFIG BANNER (for dev – hidden in production)
+    ============================================================ */
+    #config-banner {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: rgba(245,166,35,0.15);
+      border: 1px solid rgba(245,166,35,0.4);
+      border-radius: var(--radius);
+      padding: 14px 24px;
+      z-index: 5000;
+      font-size: 13px; color: var(--off-white);
+      text-align: center; max-width: 560px; width: 90%;
+      backdrop-filter: blur(10px);
+    }
+    #config-banner strong { color: var(--gold); }
+    #config-banner button {
+      margin-left: 12px; color: var(--muted); font-size: 18px; line-height: 1;
+      cursor: pointer;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: repeat(2, 1fr); }
+      .process-track::before { display: none; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .why-us-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; }
+      .stat-item { border-radius: var(--radius-sm) !important; border-left: 1px solid var(--border) !important; min-width: 140px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 32px 24px; }
+      .section { padding: 80px 0; }
+      .portfolio-header { flex-direction: column; align-items: flex-start; }
+      #cursor-dot, #cursor-ring { display: none; }
+      body { cursor: auto; }
+      button { cursor: pointer; }
+    }
+    @media (max-width: 480px) {
+      .process-track { grid-template-columns: 1fr; }
+      .stat-item { min-width: 100%; }
+    }
+  </style>
+</head>
+<script>
+(function(){
+  emailjs.init("79HDLw8RDBYhY8f2L");
+})();
+</script>
+<script>
+function sendEmail(e){
+  e.preventDefault();
+
+  let params = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    message: document.getElementById("message").value
+  };
+
+  emailjs.send(
+    "contact.thetakeoffstudio",
+    "template_rdohh79",
+    params
+  )
+  .then(function(){
+    alert("Thanks! We will contact you shortly 🚀");
+  })
+  .catch(function(){
+    alert("Something went wrong ❌");
+  });
+
+  // WhatsApp
+  let msg = `New Lead:%0AName: ${params.name}%0AEmail: ${params.email}%0APhone: ${params.phone}%0AMessage: ${params.message}`;
+  window.open(`https://wa.me/919676214625?text=${msg}`, "_blank");
+}
+</script>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"></div>
+
+  <!-- Config Banner (remove after EmailJS setup) -->
+  
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 11L5 16L6.4 17.4L10 13.8L13.6 17.4L15 16L10 11Z" fill="#08080e"/>
+              <path d="M10 4L5 9L6.4 10.4L10 6.8L13.6 10.4L15 9L10 4Z" fill="#08080e"/>
+            </svg>
+          </div>
+          TheTakeoff<span>Studio</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#why-us">Why Us</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#contact" class="btn-primary" style="padding:12px 24px; font-size:14px;">Let's Talk →</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#process" class="mobile-link">Process</a>
+    <a href="#portfolio" class="mobile-link">Portfolio</a>
+    <a href="#why-us" class="mobile-link">Why Us</a>
+    <a href="#testimonials" class="mobile-link">Reviews</a>
+    <a href="#contact" class="btn-primary mobile-link">Let's Talk →</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          Premium Web Development Agency · Hyderabad, India
+        </div>
+        <h1 class="hero-headline">
+          We Build Websites<br>That <span class="gold-text">Bring Customers</span>
+        </h1>
+        <p class="hero-sub">
+          High-performance, conversion-focused websites built for fast-growing businesses. From design to deployment — we handle everything.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Start Your Project →</a>
+          <a href="#portfolio" class="btn-outline">See Our Work</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="150">0</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="98">0</div>
+            <div class="stat-label">Client Satisfaction %</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="5">0</div>
+            <div class="stat-label">Years of Excellence</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="40">0</div>
+            <div class="stat-label">Team Members</div>
+          </div>
+        </div>
+        <div class="hero-scroll">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES
+  ============================================================ -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="services-header reveal">
+        <div class="section-tag">What We Do</div>
+        <h2 class="section-title">Services That <span>Scale</span> Your Business</h2>
+        <p class="section-sub" style="margin:0 auto">From beautiful landing pages to full-stack web apps — we deliver digital experiences that convert.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">🎨</div>
+          <div class="service-name">UI/UX Design</div>
+          <div class="service-desc">Pixel-perfect interfaces crafted to convert. We design experiences users love — beautiful, intuitive, and purposeful.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">⚡</div>
+          <div class="service-name">Web Development</div>
+          <div class="service-desc">Lightning-fast, SEO-ready websites and web apps built with Next.js, React, and modern stacks that scale effortlessly.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">📱</div>
+          <div class="service-name">Mobile-First Design</div>
+          <div class="service-desc">Every pixel optimised for every screen. Your customers browse on mobile — we make sure they convert on mobile too.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">🚀</div>
+          <div class="service-name">Landing Pages</div>
+          <div class="service-desc">High-converting landing pages designed to capture leads, reduce bounce rates, and maximise your ad spend ROI.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">🛒</div>
+          <div class="service-name">E-Commerce Stores</div>
+          <div class="service-desc">Shopify, WooCommerce, or custom — we build stores that sell. Optimised checkout flows and seamless payment integrations.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">🔍</div>
+          <div class="service-name">SEO & Performance</div>
+          <div class="service-desc">Get found on Google. We bake SEO and Core Web Vitals into every build so your site ranks and loads at warp speed.</div>
+          <div class="service-arrow">Explore →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS
+  ============================================================ -->
+  <section id="process" class="section">
+    <div class="container">
+      <div class="process-header reveal">
+        <div class="section-tag">How We Work</div>
+        <h2 class="section-title">Our Proven <span>4-Step</span> Process</h2>
+        <p class="section-sub" style="margin:0 auto">Simple, transparent, and results-driven — here's exactly how we take your vision from idea to launch.</p>
+      </div>
+      <div class="process-track">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-number">01</div>
+          <div class="step-title">Discovery Call</div>
+          <div class="step-desc">We dive deep into your goals, audience, and competition to craft a strategic plan tailored to your business.</div>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-number">02</div>
+          <div class="step-title">Design & Prototype</div>
+          <div class="step-desc">You get pixel-perfect Figma mockups for review before a single line of code is written. No surprises.</div>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-number">03</div>
+          <div class="step-title">Build & Develop</div>
+          <div class="step-desc">Our engineers build your site with performance, SEO, and accessibility baked in from day one.</div>
+        </div>
+        <div class="process-step reveal reveal-delay-4">
+          <div class="step-number">04</div>
+          <div class="step-title">Launch & Grow</div>
+          <div class="step-desc">We deploy, monitor, and support your site post-launch — ensuring it performs and converts for the long haul.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PORTFOLIO
+  ============================================================ -->
+  <section id="portfolio" class="section">
+    <div class="container">
+      <div class="portfolio-header reveal">
+        <div>
+          <div class="section-tag">Our Work</div>
+          <h2 class="section-title">Projects We're <span>Proud Of</span></h2>
+        </div>
+      </div>
+      <div class="portfolio-grid">
+
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #1a0a2e, #16213e);">
+            <span>💎</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">SaaS Platform</div>
+            <div class="portfolio-title">NovaPay Dashboard</div>
+            <div class="portfolio-desc">A sleek fintech SaaS platform with real-time analytics, role-based access, and seamless payment flows.</div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #0d2137, #1b4332);">
+            <span>🌿</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">E-Commerce</div>
+            <div class="portfolio-title">Verdant Organics</div>
+            <div class="portfolio-desc">A premium D2C organic brand store with subscription flows, loyalty rewards, and 3x ROAS on ads.</div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-3">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #1a0a00, #3d1a00);">
+            <span>🏋️</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Landing Page</div>
+            <div class="portfolio-title">IronEdge Fitness</div>
+            <div class="portfolio-desc">High-converting gym membership landing page with video backgrounds, social proof, and one-click booking.</div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-1">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #0a1628, #1e3a5f);">
+            <span>🏗️</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Corporate Website</div>
+            <div class="portfolio-title">BuildRight Infra</div>
+            <div class="portfolio-desc">A trust-building corporate website for a real estate developer, complete with project galleries and inquiry CRMs.</div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-2">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #1a0020, #2d004d);">
+            <span>🎓</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">EdTech Platform</div>
+            <div class="portfolio-title">LearnSphere Academy</div>
+            <div class="portfolio-desc">A beautiful EdTech platform with course management, progress tracking, and live class integrations.</div>
+          </div>
+        </div>
+
+        <div class="portfolio-card reveal reveal-delay-3">
+          <div class="portfolio-thumb" style="background: linear-gradient(135deg, #001a10, #004d2d);">
+            <span>🍽️</span>
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Restaurant & Food</div>
+            <div class="portfolio-title">Spice Route Bistro</div>
+            <div class="portfolio-desc">An immersive restaurant website with online table booking, digital menus, and delivery integrations.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WHY US
+  ============================================================ -->
+  <section id="why-us" class="section">
+    <div class="container">
+      <div class="why-us-header reveal">
+        <div class="section-tag">Why Choose Us</div>
+        <h2 class="section-title">The Takeoff <span>Difference</span></h2>
+        <p class="section-sub" style="margin:0 auto">We don't just build websites. We build growth engines. Here's what sets us apart from the rest.</p>
+      </div>
+      <div class="why-us-grid">
+        <div class="why-card reveal reveal-delay-1">
+          <div class="why-icon">⚡</div>
+          <div class="why-body">
+            <div class="why-title">Lightning Fast Delivery</div>
+            <div class="why-desc">Most projects are delivered in 7–14 days — without compromising on quality. We respect your timelines like our own.</div>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <div class="why-icon">🎯</div>
+          <div class="why-body">
+            <div class="why-title">Conversion-First Approach</div>
+            <div class="why-desc">Every design decision is backed by conversion data. We don't make pretty sites — we make sites that sell.</div>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <div class="why-icon">🔒</div>
+          <div class="why-body">
+            <div class="why-title">Transparent Pricing</div>
+            <div class="why-desc">No hidden fees. No surprise invoices. Clear scope, clear price, and clear ownership — always in writing.</div>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-4">
+          <div class="why-icon">🛡️</div>
+          <div class="why-body">
+            <div class="why-title">Post-Launch Support</div>
+            <div class="why-desc">We don't disappear after launch. Get 30 days of free support and ongoing maintenance plans at affordable rates.</div>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-1">
+          <div class="why-icon">📊</div>
+          <div class="why-body">
+            <div class="why-title">Data-Driven Design</div>
+            <div class="why-desc">We use heat maps, analytics, and A/B tests to continuously improve your site performance after launch.</div>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <div class="why-icon">🌐</div>
+          <div class="why-body">
+            <div class="why-title">Full-Stack Expertise</div>
+            <div class="why-desc">Design, development, SEO, and copywriting — all under one roof. One partner for your entire digital presence.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="testimonials-header reveal">
+        <div class="section-tag">Client Love</div>
+        <h2 class="section-title">What Our Clients <span>Say</span></h2>
+        <p class="section-sub" style="margin:0 auto">Real words from real clients who took off with us. Their success is our biggest achievement.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">"Takeoff Studio transformed our outdated website into a lead-generating machine. Within 3 weeks of launch, our inquiry rate doubled. Absolutely world-class work."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">RK</div>
+            <div>
+              <div class="author-name">Rahul Krishnamurthy</div>
+              <div class="author-role">CEO, BuildRight Infra</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">"I gave them my rough idea and they came back with something 10x better. The attention to detail is insane — our Shopify store looks better than any international brand."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">PS</div>
+            <div>
+              <div class="author-name">Priya Suresh</div>
+              <div class="author-role">Founder, Verdant Organics</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-3">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">"Super responsive team, fast delivery, and the results speak for themselves. Our landing page generated 2,400 leads in its first month. I was blown away."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">AM</div>
+            <div>
+              <div class="author-name">Arjun Mehta</div>
+              <div class="author-role">Director, IronEdge Fitness</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA
+  ============================================================ -->
+  <section id="cta" class="section">
+    <div class="container">
+      <div class="cta-glow"></div>
+      <div class="cta-inner reveal">
+        <div class="section-tag" style="margin:0 auto 24px">Ready To Launch?</div>
+        <h2 class="cta-title">Your Dream Website<br>Is <span style="color:var(--gold)">One Click Away</span></h2>
+        <p class="cta-sub">Stop losing customers to competitors with better websites. Let's build yours — premium, fast, and converting.</p>
+        <div class="cta-actions">
+          <a href="#contact" class="btn-primary" style="font-size:17px; padding:18px 40px;">Get a Free Quote →</a>
+          <a href="https://wa.me/919676214625" target="_blank" class="btn-outline" style="font-size:17px; padding:18px 40px;">
+            💬 Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-header reveal">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">Let's Build Something <span>Extraordinary</span></h2>
+        <p class="section-sub" style="margin:0 auto">Fill in the form and we'll get back to you within 2 business hours. No spam. Ever.</p>
+      </div>
+      <div class="contact-wrap">
+        <!-- Info -->
+        <div class="contact-info reveal">
+          <h3 class="contact-info-title">We're here to help you grow.</h3>
+          <p class="contact-info-text">Whether you need a landing page, full website, or complete digital transformation — we've got you covered. Share your vision and let's make it real.</p>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📧</span>
+            <div class="contact-detail-text">
+              <strong>Email Us</strong>
+              contact.thetakeoffstudio@gmail.com
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">💬</span>
+            <div class="contact-detail-text">
+              <strong>WhatsApp</strong>
+              +91 96762 14625
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📍</span>
+            <div class="contact-detail-text">
+              <strong>Location</strong>
+              Hyderabad, Telangana, India
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">⏱️</span>
+            <div class="contact-detail-text">
+              <strong>Response Time</strong>
+              Within 2 business hours
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="reveal reveal-delay-2">
+          <div class="contact-form" id="contact-form-container">
+            <div id="form-view">
+              <div class="form-row">
+                <div class="form-group" id="fg-name">
+                  <label for="f-name">Full Name *</label>
+                  <input type="text" id="f-name" placeholder="Your Name" required>
+                  <span class="form-error-msg">Please enter your full name.</span>
+                </div>
+                <div class="form-group" id="fg-email">
+                  <label for="f-email">Email Address *</label>
+                  <input type="email" id="f-email" placeholder="Your Email" required>
+                  <span class="form-error-msg">Please enter a valid email.</span>
+                </div>
+              </div>
+              <div class="form-group" id="fg-phone">
+                <label for="f-phone">Phone Number *</label>
+               <input type="tel" id="f-phone" placeholder="+91 98765 43210" required>
+                <span class="form-error-msg">Please enter a valid phone number.</span>
+              </div>
+              <div class="form-group" id="fg-message">
+                <label for="f-message">Tell Us About Your Project *</label>
+                <textarea id="f-message" rows="5" placeholder="Tell us about your project" required></textarea>
+                <span class="form-error-msg">Please describe your project (min 10 characters).</span>
+              </div>
+              <button class="form-submit-btn" id="submit-btn" type="button" onclick="handleSubmit()">
+                <span id="btn-text">Send Message & Get a Free Quote</span>
+                <span id="btn-loader" style="display:none">⏳ Sending...</span>
+              </button>
+              <p class="form-notice">
+                By submitting, you agree to be contacted by The Takeoff Studio. We respect your privacy and will never share your data.
+              </p>
+            </div>
+
+            <div class="form-success" id="form-success">
+              <div class="success-icon">🚀</div>
+              <div class="success-title">Message Sent Successfully!</div>
+              <div class="success-text">
+                Thank you! We will contact you shortly — usually within 2 business hours.<br><br>
+                <strong style="color:var(--gold)">Next step:</strong> Check WhatsApp for a quick confirmation from our team.
+              </div>
+              <br>
+              <a href="https://wa.me/919676214625" target="_blank" class="btn-primary" style="margin:0 auto; display:inline-flex; margin-top:16px">
+                💬 Also chat on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">Takeoff<span>Studio</span></div>
+          <p class="footer-tagline">We build websites that bring customers. Premium web development for ambitious brands.</p>
+          <br>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; color:var(--muted); background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:4px 12px; border-radius:100px;">⚡ Fast Delivery</span>
+            <span style="font-size:11px; color:var(--muted); background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:4px 12px; border-radius:100px;">🎯 Conversion Focused</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Services</div>
+          <ul>
+            <li><a href="#services">UI/UX Design</a></li>
+            <li><a href="#services">Web Development</a></li>
+            <li><a href="#services">Landing Pages</a></li>
+            <li><a href="#services">E-Commerce</a></li>
+            <li><a href="#services">SEO & Performance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <ul>
+            <li><a href="#why-us">About Us</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#process">Our Process</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contact</div>
+          <ul>
+            <li><a href="mailto:contact.thetakeoffstudio@gmail.com">📧 Email Us</a></li>
+            <li><a href="https://wa.me/919676214625" target="_blank">💬 WhatsApp</a></li>
+            <li><a href="#">📍 Hyderabad, India</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 <span>The Takeoff Studio</span>. All rights reserved. Built with ❤️ in Hyderabad.</div>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Instagram">in</a>
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" title="LinkedIn">Li</a>
+          <a href="https://wa.me/919676214625" class="social-link" title="WhatsApp" target="_blank">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* -------------------------------------------------------
+       EMAILJS CONFIGURATION
+       -------------------------------------------------------
+       1. Create account at https://www.emailjs.com
+       2. Add Gmail service → get Service ID
+       3. Create email template → get Template ID
+       4. Get your Public Key from Account → API Keys
+       5. Replace the values below
+       ------------------------------------------------------- */
+const PUBLIC_KEY = "79HDLw8RDBYhY8f2L";
+const EMAILJS_SERVICE_ID = "service_u2atmg7";
+const EMAILJS_TEMPLATE_ID = "template_rdohh79";
+const WHATSAPP_NUMBER     = '919676214625';
+
+    // Init EmailJS
+    emailjs.init("79HDLw8RDBYhY8f2L");
+
+    /* -------------------------------------------------------
+       CUSTOM CURSOR
+    ------------------------------------------------------- */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button, .service-card, .portfolio-card, .why-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    /* -------------------------------------------------------
+       SCROLL PROGRESS
+    ------------------------------------------------------- */
+    const prog = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const s = document.documentElement;
+      const pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
+      prog.style.width = pct + '%';
+    });
+
+    /* -------------------------------------------------------
+       NAVBAR SCROLL
+    ------------------------------------------------------- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* -------------------------------------------------------
+       HAMBURGER / MOBILE MENU
+    ------------------------------------------------------- */
+    const ham  = document.getElementById('hamburger');
+    const menu = document.getElementById('mobile-menu');
+    ham.addEventListener('click', () => {
+      ham.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(l => {
+      l.addEventListener('click', () => {
+        ham.classList.remove('open');
+        menu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* -------------------------------------------------------
+       SCROLL REVEAL
+    ------------------------------------------------------- */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => observer.observe(r));
+
+    /* -------------------------------------------------------
+       ANIMATED COUNTERS
+    ------------------------------------------------------- */
+    function animateCounter(el, target, suffix) {
+      let start = 0;
+      const dur = 2000;
+      const step = timestamp => {
+        if (!start) start = timestamp;
+        const prog = Math.min((timestamp - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - prog, 3);
+        el.textContent = Math.floor(ease * target) + (suffix || '+');
+        if (prog < 1) requestAnimationFrame(step);
+        else el.textContent = target + (suffix || '+');
+      };
+      requestAnimationFrame(step);
+    }
+
+    const statObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const t = parseInt(e.target.dataset.target);
+          const sfx = e.target.dataset.target === '98' ? '%' : '+';
+          animateCounter(e.target, t, sfx);
+          statObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.stat-number').forEach(n => statObs.observe(n));
+
+    /* -------------------------------------------------------
+       FORM VALIDATION & SUBMISSION
+    ------------------------------------------------------- */
+    function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function validatePhone(v) { return /^[\+\d\s\-\(\)]{7,20}$/.test(v.trim()); }
+
+    function setError(id, show) {
+      const el = document.getElementById(id);
+      el.classList.toggle('error', show);
+    }
+
+    function handleSubmit() {
+      const name    = document.getElementById('f-name').value.trim();
+      const email   = document.getElementById('f-email').value.trim();
+      const phone   = document.getElementById('f-phone').value.trim();
+      const message = document.getElementById('f-message').value.trim();
+
+      let valid = true;
+      if (!name)               { setError('fg-name', true);    valid = false; } else setError('fg-name', false);
+      if (!validateEmail(email)) { setError('fg-email', true);  valid = false; } else setError('fg-email', false);
+      if (!validatePhone(phone)) { setError('fg-phone', true);  valid = false; } else setError('fg-phone', false);
+      if (message.length < 10)  { setError('fg-message', true); valid = false; } else setError('fg-message', false);
+
+      if (!valid) return;
+
+      const btn    = document.getElementById('submit-btn');
+      const btnTxt = document.getElementById('btn-text');
+      const btnLdr = document.getElementById('btn-loader');
+
+      btn.disabled = true;
+      btnTxt.style.display = 'none';
+      btnLdr.style.display = 'inline';
+
+      // EmailJS send
+      const templateParams = {
+        name:     name,
+        email:    email,
+        phone:    phone,
+        message:  message,
+      };
+
+     emailjs.send(
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  templateParams
+)
+        .then(() => {
+          onSuccess(name, email, phone, message);
+        })
+        .catch(err => {
+          console.error('EmailJS error:', err);
+          // Reset button
+          btn.disabled = false;
+          btnTxt.style.display = 'inline';
+          btnLdr.style.display = 'none';
+          // Show a real error message instead of fake success
+          alert('⚠️ Email failed to send. Please check your EmailJS Service ID in the code.\n\nError: ' + (err.text || JSON.stringify(err)));
+        });
+    }
+
+    function onSuccess(name, email, phone, message) {
+      // Show success state
+      document.getElementById('form-view').style.display    = 'none';
+      document.getElementById('form-success').classList.add('show');
+
+      // Open WhatsApp
+      const waText = encodeURIComponent(
+        `🚀 *New Website Lead!*\n\n` +
+        `👤 *Name:* ${name}\n` +
+        `📧 *Email:* ${email}\n` +
+        `📱 *Phone:* ${phone}\n` +
+        `💬 *Message:* ${message}\n\n` +
+        `_Sent from The Takeoff Studio website_`
+      );
+      setTimeout(() => {
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, '_blank');
+      }, 800);
+    }
+
+    /* -------------------------------------------------------
+       SMOOTH SCROLL for anchor links
+    ------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    /* -------------------------------------------------------
+       REAL-TIME INPUT CLEAR ERRORS
+    ------------------------------------------------------- */
+    ['f-name','f-email','f-phone','f-message'].forEach(id => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener('input', () => {
+          const groupId = 'fg-' + id.replace('f-','');
+          setError(groupId, false);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
